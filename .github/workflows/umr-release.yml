@@ -32,15 +32,17 @@ jobs:
           else
             CTAG="$(date '+%Y.%m.%d')-${VAR}"
           fi
-          echo ::set-output name=ctag::"${CTAG}"
+          echo "ctag=${CTAG}" >>$GITHUB_OUTPUT
           echo "${CTAG}"
       - name: Set prerelease name
         id: release_id
         run: |
-          echo ::set-output name=releasename::"v${{ steps.tag_id.outputs.ctag }} (UMR/RSTUDIO/SSH/SHINY)"
+          RELEASENAME="v${{ steps.tag_id.outputs.ctag }} (UMR/RSTUDIO/SHINY)"
+          echo "releasename=${RELEASENAME}" >>$GITHUB_OUTPUT
+          echo "${RELEASENAME}"
       - name: Bump version and push tag
         id: tag_version
-        uses: mathieudutour/github-tag-action@v6.1
+        uses: mathieudutour/github-tag-action@v6.0
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           default_bump: false

@@ -1,8 +1,8 @@
-name: Weekly Actions
+name: Auto Build/Update Actions
 
 on:
   schedule:
-    - cron: "0 12 * * SUN"
+    - cron: "0 4 1 * *"
   push:
     branches: main
     paths:
@@ -71,7 +71,7 @@ jobs:
       - name: Run Trivy vulnerability scanner
         uses: aquasecurity/trivy-action@master
         with:
-          image-ref: "docker.io/umr1283/${{ matrix.image-ref }}:devel"
+          image-ref: "docker.io/mcanouil/${{ matrix.image-ref }}:devel"
           output: "trivy-${{ matrix.image-ref }}-devel.sarif"
           format: "sarif"
           ignore-unfixed: true
